@@ -104,10 +104,12 @@ def add_staff_save(request):
         email = request.POST.get('email')
         password = request.POST.get('password')
         address = request.POST.get('address')
+        staff_name = first_name + " " + last_name
 
         try:
             user = CustomUser.objects.create_user(username=username, password=password, email=email, first_name=first_name, last_name=last_name, user_type=2)  # type: ignore
             user.staffs.address = address
+            user.staffs.staff_name =  staff_name
             user.save()
             messages.success(request, "Staff Added Successfully!")
             return redirect('add_staff')
@@ -119,12 +121,12 @@ def add_staff_save(request):
 
 def manage_staff(request):
     staffs = Staffs.objects.all()
-   
+ 
     staffFilter = StaffFilter(request.GET,queryset=staffs)  
     
-    if StaffFilter.qs !=0:
+    if staffFilter:
         staffs = staffFilter.qs
-    
+        
     context = {
         "staffs": staffs,
         'staffFilter': staffFilter
@@ -152,19 +154,20 @@ def edit_staff_save(request):
         first_name = request.POST.get('first_name')
         last_name = request.POST.get('last_name')
         address = request.POST.get('address')
-
+        staff_name = first_name + " " + last_name
         try:
             # INSERTING into Customuser Model
             user = CustomUser.objects.get(id=staff_id)
             user.first_name = first_name
             user.last_name = last_name
             user.email = email
-            user.username = username
+            user.username = username 
             user.save()
             
             # INSERTING into Staff Model
             staff_model = Staffs.objects.get(admin=staff_id)
             staff_model.address = address
+            staff_model.staff_name = staff_name
             staff_model.save()
 
             messages.success(request, "Staff Updated Successfully.")
@@ -213,12 +216,11 @@ def manage_course(request):
     courses = Courses.objects.all()
    
     courseFilter = CourseFilter(request.GET,queryset=courses)  
-    if CourseFilter.qs !=0:
+    if courseFilter.qs:
         courses = courseFilter.qs
         
     context = {
         "courses": courses,
-
         "courseFilter": courseFilter
     }
     return render(request, 'hod_template/manage_course_template.html', context)
@@ -375,7 +377,7 @@ def add_student_save(request):
             else:
                 profile_pic_url = None
 
-
+            student_name = first_name + " " + last_name
             try:
                 user = CustomUser.objects.create_user(username=username, password=password, email=email, first_name=first_name, last_name=last_name, user_type=3)  # type: ignore
                 user.students.address = address
@@ -388,6 +390,7 @@ def add_student_save(request):
 
                 user.students.gender = gender
                 user.students.profile_pic = profile_pic_url
+                user.students.student_name = student_name
                 user.save()
                 messages.success(request, "Student Added Successfully!")
                 return redirect('add_student')
@@ -400,8 +403,13 @@ def add_student_save(request):
 
 def manage_student(request):
     students = Students.objects.all()
+    
+    studentFilter = StudentFilter(request.GET,queryset=students)  
+    if studentFilter.qs:
+        students = studentFilter.qs
     context = {
-        "students": students
+        "students": students,
+        "studentFilter" : studentFilter
     }
     return render(request, 'hod_template/manage_student_template.html', context)
 
@@ -459,7 +467,7 @@ def edit_student_save(request):
                 profile_pic_url = fs.url(filename)
             else:
                 profile_pic_url = None
-
+            student_name = first_name + " " + last_name
             try:
                 # First Update into Custom User Model
                 user = CustomUser.objects.get(id=student_id)
@@ -472,7 +480,7 @@ def edit_student_save(request):
                 # Then Update Students Table
                 student_model = Students.objects.get(admin=student_id)
                 student_model.address = address
-
+                student_model.student_name = student_name
                 course = Courses.objects.get(id=course_id)
                 student_model.course_id = course
 
@@ -542,8 +550,16 @@ def add_subject_save(request):
 
 def manage_subject(request):
     subjects = Subjects.objects.all()
+    
+    subjectFilter = SubjectFilter(request.GET, queryset=subjects)
+    
+    if subjectFilter.qs:
+        subjects = subjectFilter.qs
+    
+    
     context = {
-        "subjects": subjects
+        "subjects": subjects,
+        "subjectFilter": subjectFilter
     }
     return render(request, 'hod_template/manage_subject_template.html', context)
 

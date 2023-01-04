@@ -30,7 +30,6 @@ class Staffs(models.Model):
     address = models.TextField()
     staff_name = models.CharField(max_length=255, default ="")
     def __str__(self):
-        self.staff_name = self.admin.first_name +" "+ self.admin.last_name
         return self.staff_name
 class Courses(models.Model):
     id = models.AutoField(primary_key=True)
@@ -48,6 +47,11 @@ class Subjects(models.Model):
     staff_id = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    objects = models.Manager()
+    def __str__(self):
+        return self.subject_name
+    
+    
 class Students(models.Model):
     id = models.AutoField(primary_key=True)
     admin = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
@@ -60,7 +64,9 @@ class Students(models.Model):
     address = models.TextField()
     course_id = models.ForeignKey(Courses, on_delete=models.DO_NOTHING, default=1)  # type: ignore
     objects = models.Manager()
-    
+    student_name = models.CharField(max_length=255, default ="")
+    def __str__(self):
+        return self.student_name
 class Attendance(models.Model):
     id = models.AutoField(primary_key=True)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -69,6 +75,7 @@ class Attendance(models.Model):
     subject_id = models.ForeignKey(Subjects, on_delete=models.DO_NOTHING)
     attendance_date  = models.DateField()
     session_year_id = models.ForeignKey(SessionYearModel, on_delete=models.DO_NOTHING)
+    
     
 class AttendanceReport(models.Model):
     id = models.AutoField(primary_key=True)
