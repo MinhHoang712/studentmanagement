@@ -1,6 +1,7 @@
 
 **Giới Thiệu:** 
-<space><space>
+<space>Studentmanagement là một trang web với nội dung quản lý sinh viên dành cho trường học, với các tính năng cơ bản như quản lý sinh viên, nhân viên nhà trường, quản lý môn học, học kỳ, và các tính năng đang được phát triển.<space>
+
 Studentmanagement là một trang web với nội dung quản lý sinh viên dành cho trường học, với các tính năng cơ bản như quản lý sinh viên, nhân viên nhà trường, quản lý môn học, học kỳ, và các tính năng đang được phát triển.
 
 ##Công cụ phát triển 
