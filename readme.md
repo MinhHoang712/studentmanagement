@@ -1,14 +1,14 @@
 
-**Giới Thiệu:** 
-<space>Studentmanagement là một trang web với nội dung quản lý sinh viên dành cho trường học, với các tính năng cơ bản như quản lý sinh viên, nhân viên nhà trường, quản lý môn học, học kỳ, và các tính năng đang được phát triển.<space>
+## Giới Thiệu 
+<space><space>
 
 Studentmanagement là một trang web với nội dung quản lý sinh viên dành cho trường học, với các tính năng cơ bản như quản lý sinh viên, nhân viên nhà trường, quản lý môn học, học kỳ, và các tính năng đang được phát triển.
 
-##Công cụ phát triển 
+## Công cụ phát triển
 - Python 3.10.8
 - Django 4.0.1
 - SQLITE3 3.37.2
-##Cách cài đặt
+## Cách cài đặt
 
 1. Cài đặt python từ trang chủ https://www.python.org/ 
 2. Tạo thư mục mới, tải xuống toàn bộ project studentmangement và lưu vào đó
